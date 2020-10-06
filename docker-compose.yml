@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+    # Main Server
+    api.bookclub:
+        build: ./server
+        environment:
+            - MONGO_URI=${MONGO_URI}
+            - PORT=${SERVER_PORT}
+            - NODE_ENV=development
+        expose:
+            - ${SERVER_PORT}
+        ports:
+            - ${SERVER_PORT}:${SERVER_PORT}
+        volumes:
+            - ./server/src:/app/server/src
+        command: nodemon -L src/server.js
+        depends_on:
+            - db.bookclub
+        networks:
+            - 'app-network'
+        restart: always
+    # MongoDB
+    db.bookclub:
+        image: mongo
+        ports:
+            - ${MONGO_PORT}:${MONGO_PORT}
+        networks:
+            - 'app-network'
+        volumes:
+            - db-bookclub-data:/data/db
+        restart: always
+
+networks:
+    app-network:
+        driver: bridge
+          
+volumes:
+    db-bookclub-data: {}
