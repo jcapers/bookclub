@@ -21,6 +21,26 @@ services:
         networks:
             - 'app-network'
         restart: always
+    # Frontend Client
+    client.bookclub:
+        build: ./client
+        environment:
+          - REACT_APP_PORT=${REACT_APP_PORT}
+          - CHOKIDAR_USEPOLLING=true
+        expose:
+          - ${REACT_APP_PORT}
+        ports:
+          - ${REACT_APP_PORT}:${REACT_APP_PORT}
+        volumes:
+          - ./client/src:/app/client/src
+          - ./client/public:/app/client/public
+        depends_on: 
+          - api.bookclub
+        networks:
+          - 'app-network'
+        command: npm run start
+        restart: always
+        stdin_open: true
     # MongoDB
     db.bookclub:
         image: mongo

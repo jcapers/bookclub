@@ -1,0 +1,5 @@
+# Docker to ignore these files
+.git
+node_modules
+npm-debug
+build
