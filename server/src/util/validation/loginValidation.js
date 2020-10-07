@@ -2,12 +2,12 @@ const Validator = require("validator");
 const isEmpty = require("is-empty");
 
 
-module.exports.validateLogin = (input) => {
+module.exports = function validateLogin(input) {
   let errors = {};
 
   // Converts empty fields to empty strings for easier validation
-  data.email = !isEmpty(input.email) ? input.email : "";
-  data.password = !isEmpty(input.password) ? input.password : "";
+  input.email = !isEmpty(input.email) ? input.email : "";
+  input.password = !isEmpty(input.password) ? input.password : "";
 
   // Validate login details
   if (Validator.isEmpty(input.email)) {
@@ -25,4 +25,3 @@ module.exports.validateLogin = (input) => {
     errors, isValid: isEmpty(errors)
   };
 };
-}

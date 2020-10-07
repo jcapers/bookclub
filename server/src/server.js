@@ -1,10 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const passport = require("passport");
+
+const users = require("./routes/userRoutes");
 
 
 const app = express();
-const { dbURI, serverPort } = require('./config/config');
+const {dbURI, serverPort} = require('./config/config');
 
 // Setup body-parser middleware
 app.use(
@@ -21,6 +24,14 @@ mongoose.connect(dbURI, {
 })
 .then(() => console.log(`MongoDB successfully connected at ${dbURI}`))
 .catch(err => console.log(err));
+
+// Passport middleware
+app.use(passport.initialize());
+// Passport config
+require("./config/passport")(passport);
+
+// Routes
+app.use("/users", users);
 
 // Default port to 4000 if not specified
 const port = serverPort || 4000
