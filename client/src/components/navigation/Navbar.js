@@ -37,7 +37,7 @@ export default function Navbar() {
           </IconButton>
           <div className={classes.title}>
             <Typography variant="h5">
-              <Link component={RouterLink} to="/" onClick={preventDefault} color="inherit" underline="none">
+              <Link component={RouterLink} to="/" color="inherit" underline="none">
                 Book Club <MenuBookIcon />
               </Link>
             </Typography>

@@ -1,10 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Route } from "react-router-dom";
+
+// REDUX
+import { Provider } from "react-redux";
+// import store from "./store";
+
+// MATERIAL UI
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+// SCREENS
 import Navbar from './components/navigation/Navbar'
 import Home from './screens/Home'
-import Registration from './screens/auth/Registration'
+import LoginScreen from './screens/auth/LoginScreen'
+import RegisterScreen from './screens/auth/RegisterScreen'
 import './App.css';
 
 function App() {
@@ -13,12 +21,12 @@ function App() {
       <CssBaseline />
         <div className="App">
           <Navbar />
-          <Home />
-          <Registration />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={LoginScreen} />
+          <Route exact path="/register" component={RegisterScreen} />
         </div>
       <CssBaseline />
     </BrowserRouter>
-
   );
 }
 

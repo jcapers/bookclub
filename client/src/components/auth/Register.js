@@ -4,10 +4,6 @@ import { Link as RouterLink } from 'react-router-dom';
 // MATERIAL UI
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
@@ -15,13 +11,12 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 // MATERIAL ICONS
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 
-class Registration extends Component {
+class Register extends Component {
 
   constructor() {
     super();
@@ -32,13 +27,6 @@ class Registration extends Component {
       password: "",
       password2: "",
       errors: {}
-    };
-    this.newUser = {
-      name: this.state.name,
-      displayName: this.state.displayName,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
     };
   }
   /*
@@ -57,31 +45,25 @@ class Registration extends Component {
   */
   onSubmit = (event) => {
     event.preventDefault();
+
+    const newUser = {
+      name: this.state.name,
+      displayName: this.state.displayName,
+      email: this.state.email,
+      password: this.state.password,
+      password2: this.state.password2
+    };
+
+    console.log(newUser);
   }
 
   render() {
-    console.log(this.newUser);
     const { classes } = this.props;
     const { errors } = this.state;
-    const preventDefault = (event) => event.preventDefault();
 
     return (
-      <Container className={classes.root}>
-        <Box display="flex" flexDirection="column" justifyContent="center" className={classes.section}>
-          <Typography variant="h5">
-              Register for the Book Club!
-          </Typography>
-          <Typography variant="body1">
-              Already have an account? <Link component={RouterLink} to="/login" onClick={preventDefault} color="primary" underline="none">
-                Go to Login! </Link>
-          </Typography>
-        </Box>
-        <Grid
-          container
-          direction="column"
-          justify="center"
-          alignItems="center"
-        >
+      <form className={classes.form} onSubmit={this.onSubmit}>
+        <Box className={classes.section}>
           <FormControl margin="dense">
             <InputLabel htmlFor="name">Name</InputLabel>
             <Input
@@ -97,7 +79,9 @@ class Registration extends Component {
               }>
             </Input>
           </FormControl>
+        </Box>
 
+        <Box className={classes.section}>
           <FormControl margin="dense"> 
             <InputLabel htmlFor="displayName">Display Name</InputLabel>
             <Input
@@ -112,9 +96,11 @@ class Registration extends Component {
                 </InputAdornment>
               }>
             </Input>
-            <FormHelperText id="helper-displayName">Enter the name you want people to see!</FormHelperText>
+            <FormHelperText id="helper-displayName">Name that you want others see</FormHelperText>
           </FormControl>
+        </Box>
 
+        <Box className={classes.section}>
           <FormControl margin="dense">
             <InputLabel htmlFor="email">Email</InputLabel>
             <Input
@@ -130,7 +116,9 @@ class Registration extends Component {
               }>
             </Input>
           </FormControl>
+        </Box>
 
+        <Box className={classes.section}>
           <FormControl margin="dense">
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
@@ -145,14 +133,16 @@ class Registration extends Component {
                 </InputAdornment>
               }>
             </Input>
-            <FormHelperText id="helper-password">Password should be at least 8 characters</FormHelperText>
+            <FormHelperText id="helper-password">Password at least 8 characters</FormHelperText>
           </FormControl>
+        </Box>
 
+        <Box className={classes.section}>
           <FormControl margin="dense">
             <InputLabel htmlFor="password2">Confirm Password</InputLabel>
             <Input
               id="password2"
-              type="password2"
+              type="password"
               value={this.state.password2}
               onChange={this.onChange}
               errors={errors.password2}
@@ -163,20 +153,19 @@ class Registration extends Component {
               }>
             </Input>
           </FormControl>
+        </Box>
 
+        <Box className={classes.section}> 
           <Button 
             type="submit"
             variant="outlined" 
             color="primary" 
-            className={classes.button}>
+            className={classes.button}
+          >
             Register
           </Button>
-        </Grid>
-        <Box display="flex" flexDirection="column" justifyContent="center" className={classes.section}>
-        
         </Box>
-      </Container>
-
+      </form>
     )
   }
 
@@ -191,8 +180,11 @@ const styles = (theme) => ({
   },
   button: {
     margin: theme.spacing(1)
+  },
+  form: {
+    margin: theme.spacing(1)
   }
 });
 
 
-export default withStyles(styles, { withTheme: true })(Registration);
+export default withStyles(styles, { withTheme: true })(Register);
