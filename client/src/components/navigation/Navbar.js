@@ -1,5 +1,9 @@
 import React from "react";
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { useHistory } from "react-router";
+// REDUX
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from "../../actions/authActions";
 // MATERIAL UI
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,21 +16,22 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1
-  },
-}));
+
 
 export default function Navbar() {
   const classes = useStyles();
   const preventDefault = (event) => event.preventDefault();
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  // History hook
+  const history = useHistory();
+  // Dispatch Hook
+  const dispatch = useDispatch();
+  // Call logout dispatch action.
+  const onClickLogout = (event) => {
+    event.preventDefault();
+    dispatch(logoutUser());
+    history.push("/");
+  };
 
   return (
     <div className={classes.root}>
@@ -42,9 +47,31 @@ export default function Navbar() {
               </Link>
             </Typography>
           </div>
-          <Button component={RouterLink} to="/login" variant="contained">Login</Button>
+          {
+            isAuth ? 
+            <Button onClick={onClickLogout} variant="contained">
+              Logout
+            </Button> :
+            <Button component={RouterLink} to="/login" variant="contained">
+              Login
+            </Button> 
+          }
+          
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    marginBottom: theme.spacing(2)
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1
+  },
+}));

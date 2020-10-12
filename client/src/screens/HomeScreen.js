@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 
-class Home extends Component {
+class HomeScreen extends Component {
 
   render() {
     const { classes } = this.props;
@@ -18,6 +18,9 @@ class Home extends Component {
       <Container className={classes.root}>
         <Typography variant="h3">
             Welcome to the Book Club!
+        </Typography>
+        <Typography variant="overline">
+            Register or Login to proceed!
         </Typography>
         <Box display="flex" justifyContent="center">
           <Button 
@@ -45,6 +48,7 @@ class Home extends Component {
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
+    marginTop: theme.spacing(2)
   },
   button: {
     margin: theme.spacing(1)
@@ -52,4 +56,4 @@ const styles = (theme) => ({
 });
 
 
-export default withStyles(styles, { withTheme: true })(Home);
+export default withStyles(styles, { withTheme: true })(HomeScreen);

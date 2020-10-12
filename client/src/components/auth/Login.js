@@ -1,9 +1,16 @@
 import React from "react";
 import { Component } from "react";
+import { Link as RouterLink, withRouter } from 'react-router-dom';
+// REDUX
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+import classnames from "classnames";
 // MATERIAL UI
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -22,6 +29,19 @@ class Login extends Component {
       password: "",
       errors: {}
     };
+  }
+  /*
+  * When authenticated, push user to welcome screen.
+  */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/userHome");
+    }
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
   }
   /*
   * Sets state for event context id with value in form field.
@@ -46,6 +66,7 @@ class Login extends Component {
     };
 
     console.log(userDetails);
+    this.props.loginUser(userDetails);
   }
 
   render() {
@@ -67,8 +88,12 @@ class Login extends Component {
                   <InputAdornment position="start">
                     <EmailOutlinedIcon />
                   </InputAdornment>
-                }>
+                }
+                className={classnames("", {
+                  invalid: errors.email
+                })}>
               </Input>
+              <FormHelperText error={true} id="helper-error-email">{errors.email}</FormHelperText>
             </FormControl>
           </Box>
 
@@ -85,20 +110,28 @@ class Login extends Component {
                   <InputAdornment position="start">
                     <LockOutlinedIcon />
                   </InputAdornment>
-                }>
+                }
+                className={classnames("", {
+                  invalid: errors.password
+                })}>
               </Input>
+              <FormHelperText error={true} id="helper-error-password">{errors.password}</FormHelperText>
             </FormControl>
           </Box>
 
           <Box className={classes.section}> 
-            <Button 
-              type="submit"
-              variant="outlined" 
-              color="primary" 
-              className={classes.button}
-            >
-              Login
-            </Button>
+          <FormControl>
+            <FormHelperText error={true} id="helper-error-creds">{errors.credentialsIncorrect}</FormHelperText>
+              <Button 
+                type="submit"
+                variant="outlined" 
+                color="primary" 
+                className={classes.button}
+              >
+                Login
+              </Button>
+          </FormControl>
+
           </Box>
         </form>
     )
@@ -106,7 +139,7 @@ class Login extends Component {
 
 }
 
-const styles = (theme) => ({
+const classes = (theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -121,5 +154,19 @@ const styles = (theme) => ({
   }
 });
 
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
 
-export default withStyles(styles, { withTheme: true })(Login);
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+
+// export default withStyles(classes, { withTheme: true })(Login);
+export default withRouter(connect(
+  mapStateToProps, { loginUser }
+)(withStyles(classes)(Login)))

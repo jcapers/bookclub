@@ -1,6 +1,11 @@
 import React from "react";
 import { Component } from "react";
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
+// REDUX
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
+import classnames from "classnames";
 // MATERIAL UI
 import { withStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -30,6 +35,16 @@ class Register extends Component {
     };
   }
   /*
+  * React function on props being received.
+  */
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+  /*
   * Sets state for event context id with value in form field.
   * @event Registration#onFormChange
   */
@@ -55,14 +70,16 @@ class Register extends Component {
     };
 
     console.log(newUser);
-  }
+
+    this.props.registerUser(newUser, this.props.history); 
+  };
 
   render() {
     const { classes } = this.props;
     const { errors } = this.state;
 
     return (
-      <form className={classes.form} onSubmit={this.onSubmit}>
+      <form className={classes.form} onSubmit={this.onSubmit} noValidate>
         <Box className={classes.section}>
           <FormControl margin="dense">
             <InputLabel htmlFor="name">Name</InputLabel>
@@ -76,8 +93,12 @@ class Register extends Component {
                 <InputAdornment position="start">
                   <AccountCircleOutlinedIcon />
                 </InputAdornment>
-              }>
+              }
+              className={classnames("", {
+                invalid: errors.name
+              })}>
             </Input>
+            <FormHelperText error={true} id="helper-error-name">{errors.name}</FormHelperText>
           </FormControl>
         </Box>
 
@@ -94,8 +115,12 @@ class Register extends Component {
                 <InputAdornment position="start">
                   <AccountCircleOutlinedIcon />
                 </InputAdornment>
-              }>
+              }
+              className={classnames("", {
+                invalid: errors.displayName
+              })}>
             </Input>
+            <FormHelperText error={true} id="helper-error-displayName">{errors.displayName}</FormHelperText>
             <FormHelperText id="helper-displayName">Name that you want others see</FormHelperText>
           </FormControl>
         </Box>
@@ -113,8 +138,12 @@ class Register extends Component {
                 <InputAdornment position="start">
                   <EmailOutlinedIcon />
                 </InputAdornment>
-              }>
+              }
+              className={classnames("", {
+                invalid: errors.email
+              })}>
             </Input>
+            <FormHelperText error={true} id="helper-error-email">{errors.email}</FormHelperText>
           </FormControl>
         </Box>
 
@@ -131,8 +160,12 @@ class Register extends Component {
                 <InputAdornment position="start">
                   <LockOutlinedIcon />
                 </InputAdornment>
-              }>
+              }
+              className={classnames("", {
+                invalid: errors.password
+              })}>
             </Input>
+            <FormHelperText error={true} id="helper-error-password">{errors.password}</FormHelperText>
             <FormHelperText id="helper-password">Password at least 8 characters</FormHelperText>
           </FormControl>
         </Box>
@@ -150,8 +183,12 @@ class Register extends Component {
                 <InputAdornment position="start">
                   <LockOutlinedIcon />
                 </InputAdornment>
-              }>
+              }
+              className={classnames("", {
+                invalid: errors.password2
+              })}>
             </Input>
+            <FormHelperText error={true} id="helper-error-password">{errors.password2}</FormHelperText>
           </FormControl>
         </Box>
 
@@ -171,7 +208,7 @@ class Register extends Component {
 
 }
 
-const styles = (theme) => ({
+const classes = (theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -186,5 +223,19 @@ const styles = (theme) => ({
   }
 });
 
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
 
-export default withStyles(styles, { withTheme: true })(Register);
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+// export default withRouter(connect()(withStyles(styles)(FirstPage)))
+// export default withStyles(classes, { withTheme: true })(Register);
+export default withRouter(connect(
+  mapStateToProps, { registerUser }
+)(withStyles(classes)(Register)))
