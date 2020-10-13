@@ -49,11 +49,10 @@ export default function UserHome() {
               <Grid xs={6} item>
                 <Card className={classes.root}>
                   <CardActionArea>
-                    <CardMedia
-                      style={{height: 500}}
+                    <img
                       className={classes.media}
-                      image="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1546870952l/42036538.jpg"
-                      title="Gideon the Ninth"
+                      src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1546870952l/42036538.jpg"
+                      alt="Gideon the Ninth"
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
@@ -74,11 +73,10 @@ export default function UserHome() {
               <Grid xs={6} item>
                 <Card className={classes.root}>
                     <CardActionArea>
-                      <CardMedia
-                        style={{height: 500}}
+                      <img
                         className={classes.media}
-                        image="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1596688809l/54830846.jpg"
-                        title="Harrow the Ninth"
+                        src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1596688809l/54830846.jpg"
+                        alt="Harrow the Ninth"
                       />
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
@@ -182,4 +180,13 @@ const useStyles = makeStyles((theme) => ({
   lists: {
 
   },
+  media: {
+    maxHeight: 256,
+    maxWidth: 256,
+    minHeight: 64,
+    minWidth: 64,
+    height: "56.25%",
+    objectFit: "contain"
+    
+  }
 }));
