@@ -58,7 +58,7 @@ router.get("/readlist/:userID", (req, res) => {
 
 router.put("/readlist/update/:readlistID", (req, res) => {
   console.log(req.body);
-  ReadList.findByIdAndUpdate(req.params.readlistID, req.body).then(newList => {
+  ReadList.findByIdAndUpdate(req.params.readlistID, { $push: req.body }).then(newList => {
     console.log(newList);
     return res.json(newList);
   });
