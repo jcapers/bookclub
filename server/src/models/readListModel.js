@@ -20,6 +20,7 @@ const Schema = mongoose.Schema;
 const readListSchema = new Schema({
   userID: {
     type: Schema.ObjectId,
+    ref: "users",
     required: true
   },
   title: {

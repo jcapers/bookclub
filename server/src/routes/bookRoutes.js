@@ -35,8 +35,26 @@ router.post("/readlist/create", (req, res) => {
       .catch(err => console.log(err))
   }).catch(err => {
     console.log(err);
+    next( { status: 400, message: "Failed to create reading list."} )
   });
+});
 
+/*
+* Get all reading lists for user
+* GET /books/readlist/:userID
+*/
+router.get("/readlist/:userID", (req, res) => {
+  // Check required fields exist
+  if (!req.params.userID) {
+    return res.status(400).json({ noUserID: ":userID param required to find reading lists." });
+  }
+
+  ReadList.find({userID: req.params.userID}).then(lists => {
+    if (!lists) {
+      return res.status(404).json({notFound: "Did not find any reading lists."});
+    }
+    return res.json({success: true, payload: lists})
+  });
 });
 
 module.exports = router;
