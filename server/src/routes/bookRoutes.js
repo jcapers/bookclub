@@ -26,16 +26,15 @@ router.post("/readlist/create", (req, res) => {
 
   User.findById(req.body.userID).then(user => {
     // Create reading list
+    console.log(user);
     const newList = new ReadList({
       userID: user._id,
+      createdBy: user.displayName,
       title: req.body.title,
     });
     newList.save()
       .then(list => res.json(list))
       .catch(err => console.log(err))
-  }).catch(err => {
-    console.log(err);
-    next( { status: 400, message: "Failed to create reading list."} )
   });
 });
 
@@ -54,6 +53,14 @@ router.get("/readlist/:userID", (req, res) => {
       return res.status(404).json({notFound: "Did not find any reading lists."});
     }
     return res.json({success: true, payload: lists})
+  });
+});
+
+router.put("/readlist/update/:readlistID", (req, res) => {
+  console.log(req.body);
+  ReadList.findByIdAndUpdate(req.params.readlistID, req.body).then(newList => {
+    console.log(newList);
+    return res.json(newList);
   });
 });
 

@@ -23,6 +23,10 @@ const readListSchema = new Schema({
     ref: "users",
     required: true
   },
+  createdBy: {
+    type: String,
+    required: true
+  },
   title: {
     type: String,
     required: true,
