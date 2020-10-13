@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 
 const users = require("./routes/userRoutes");
+const books = require("./routes/bookRoutes");
 
 
 const app = express();
@@ -32,6 +33,7 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/users", users);
+app.use("/books", books)
 
 // Default port to 4000 if not specified
 const port = serverPort || 4000
