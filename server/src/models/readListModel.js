@@ -36,10 +36,12 @@ const readListSchema = new Schema({
     {
       bookTitle: {
         type: String,
-        required: true
+        required: true,
+        unique: true
       },
       comment: {
-        type: String
+        type: String,
+        default: ""
       },
       read: {
         type: Boolean,

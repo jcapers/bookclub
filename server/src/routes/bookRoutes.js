@@ -26,14 +26,13 @@ router.post("/readlist/create", (req, res) => {
 
   User.findById(req.body.userID).then(user => {
     // Create reading list
-    console.log(user);
     const newList = new ReadList({
       userID: user._id,
       createdBy: user.displayName,
       title: req.body.title,
     });
     newList.save()
-      .then(list => res.json(list))
+      .then(list => res.json({success: true, message: "Created reading list.", payload: list}))
       .catch(err => console.log(err))
   });
 });
@@ -49,18 +48,42 @@ router.get("/readlist/:userID", (req, res) => {
   }
 
   ReadList.find({userID: req.params.userID}).then(lists => {
-    if (!lists) {
+    if (lists.length < 1) {
       return res.status(404).json({notFound: "Did not find any reading lists."});
     }
-    return res.json({success: true, payload: lists})
+    return res.json({success: true, message: "Retrieved user's readling lists.", payload: lists})
   });
+
 });
 
-router.put("/readlist/update/:readlistID", (req, res) => {
-  console.log(req.body);
-  ReadList.findByIdAndUpdate(req.params.readlistID, { $push: req.body }).then(newList => {
-    console.log(newList);
-    return res.json(newList);
+/*
+* Adds item to reading list for :readlistID.
+* PUT /books/readlist/addItem/:readlistID
+*/
+router.put("/readlist/addItem/:readlistID", (req, res) => {
+  ReadList.findById(req.params.readlistID).then(list => {
+    const itemExists = list.items.some(item => {
+      return item.bookTitle === req.body.bookTitle;
+    });
+    if (itemExists) {
+      return res.status(400).json({ itemExists: "Item already exists in list." })
+    }
+
+    // Item doesn't exist so update
+    ReadList.findByIdAndUpdate(req.params.readlistID, { $push: {
+      items: req.body
+    }}).then(update => {
+      return res.json({success: true, message: "Item added to reading list.", payload: update})
+    })
+  })
+});
+
+router.delete("/readlist/deleteItem/:readlistID", async (req, res) => {
+  console.log(req.body)
+  await ReadList.findByIdAndUpdate(req.params.readlistID, { $pull: {
+    "items": { "bookTitle": req.body.bookTitle }
+  }}, { safe: true, upsert: true }).then(update => {
+    return res.json({success: true, message: "Item deleted from readling list.", payload: update})
   });
 });
 
