@@ -36,8 +36,7 @@ const readListSchema = new Schema({
     {
       bookTitle: {
         type: String,
-        required: true,
-        unique: true
+        required: true
       },
       comment: {
         type: String,

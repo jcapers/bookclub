@@ -19,7 +19,7 @@ const Schema = mongoose.Schema;
 **    updateDate: Datetime of list update
 *******************************************************************************/
 
-const booksSchema = new Schema({
+const bookshelfSchema = new Schema({
   userID: {
     type: Schema.ObjectId,
     ref: "users",
@@ -39,7 +39,6 @@ const booksSchema = new Schema({
       bookTitle: {
         type: String,
         required: true,
-        unique: true
       },
       imageURI: {
         type: String,
@@ -51,8 +50,7 @@ const booksSchema = new Schema({
       },
       tags: [
         {
-          type: String,
-          unique: true
+          type: String
         }
       ]
     }
@@ -67,4 +65,4 @@ const booksSchema = new Schema({
   }
 });
 
-module.exports = ReadList = mongoose.model("books", readListSchema);
+module.exports = Bookshelf = mongoose.model("bookshelf", bookshelfSchema);
