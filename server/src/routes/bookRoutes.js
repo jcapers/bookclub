@@ -33,7 +33,7 @@ router.post("/shelf/create", (req, res) => {
       shelfName: req.body.shelfName,
     });
     newShelf.save()
-      .then(list => res.json({success: true, message: `Created bookshelf: ${newShelf.shelfName}.`, payload: list}))
+      .then(list => res.json({success: true, message: `Created bookshelf: ${newShelf.shelfName}.`, data: list}))
       .catch(err => console.log(err))
   });
 });
@@ -66,7 +66,7 @@ router.get("/shelf/:userID", (req, res) => {
     if (shelves.length < 1) {
       return res.status(404).json({notFound: "Did not find any bookshelves."});
     }
-    return res.json({success: true, message: "Retrieved user's bookshelves.", payload: shelves})
+    return res.json({success: true, message: "Retrieved user's bookshelves.", data: shelves})
   });
 });
 
@@ -90,7 +90,7 @@ router.put("/shelf/addBook/:shelfID", (req, res) => {
       },
       updateDate: Date.now()
     }).then(update => {
-      return res.json({success: true, message: `Book ${req.body.bookTitle} added to bookshelf.`, payload: update})
+      return res.json({success: true, message: `Book ${req.body.bookTitle} added to bookshelf.`, data: update})
     })
   })
 });
@@ -106,7 +106,7 @@ router.delete("/shelf/deleteBook/:shelfID", async (req, res) => {
     },
     updateDate: Date.now()
   }, { safe: true }).then(update => {
-    return res.json({success: true, message: `Book ${req.body.bookTitle} removed from bookshelf.`, payload: update})
+    return res.json({success: true, message: `Book ${req.body.bookTitle} removed from bookshelf.`, data: update})
   });
 });
 
@@ -130,7 +130,7 @@ router.post("/readlist/create", (req, res) => {
       title: req.body.title,
     });
     newList.save()
-      .then(list => res.json({success: true, message: `Created reading list: ${newList.title}`, payload: list}))
+      .then(list => res.json({success: true, message: `Created reading list: ${newList.title}`, data: list}))
       .catch(err => console.log(err))
   });
 });
@@ -164,7 +164,7 @@ router.get("/readlist/:userID", (req, res) => {
     if (lists.length < 1) {
       return res.status(404).json({notFound: "Did not find any reading lists."});
     }
-    return res.json({success: true, message: "Retrieved user's readling lists.", payload: lists})
+    return res.json({success: true, message: "Retrieved user's readling lists.", data: lists})
   });
 
 });
@@ -189,7 +189,7 @@ router.put("/readlist/addItem/:readlistID", (req, res) => {
       },
       updateDate: Date.now()
     }).then(update => {
-      return res.json({success: true, message: `Item ${req.body.bookTitle} added to reading list.`, payload: update})
+      return res.json({success: true, message: `Item ${req.body.bookTitle} added to reading list.`, data: update})
     })
   })
 });
@@ -205,7 +205,7 @@ router.delete("/readlist/deleteItem/:readlistID", async (req, res) => {
     },
     updateDate: Date.now()
   }, { safe: true }).then(update => {
-    return res.json({success: true, message: `Item ${req.body.bookTitle} deleted from reading list.`, payload: update})
+    return res.json({success: true, message: `Item ${req.body.bookTitle} deleted from reading list.`, data: update})
   });
 });
 

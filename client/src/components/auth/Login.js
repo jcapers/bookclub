@@ -35,7 +35,7 @@ class Login extends Component {
   */
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/userHome");
+      this.props.history.push("/bookshelf");
     }
     if (nextProps.errors) {
       this.setState({
@@ -65,7 +65,6 @@ class Login extends Component {
       password: this.state.password
     };
 
-    console.log(userDetails);
     this.props.loginUser(userDetails);
   }
 

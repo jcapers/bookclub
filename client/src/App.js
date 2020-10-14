@@ -15,7 +15,7 @@ import Navbar from './components/navigation/Navbar'
 import HomeScreen from './screens/HomeScreen'
 import LoginScreen from './screens/auth/LoginScreen'
 import RegisterScreen from './screens/auth/RegisterScreen'
-import UserHome from "./screens/UserHomeScreen";
+import BookshelfScreen from "./screens/BookshelfScreen";
 import './App.css';
 
 // Auth Token Expiry Check
@@ -46,7 +46,7 @@ function App() {
             <Route exact path="/login" component={LoginScreen} />
             <Route exact path="/register" component={RegisterScreen} />
             <Switch>
-              <PrivateRoute exact path="/userHome" component={UserHome} />
+              <PrivateRoute exact path="/bookshelf" component={BookshelfScreen} />
             </Switch>
           </div>
         <CssBaseline />
