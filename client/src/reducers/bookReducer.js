@@ -1,7 +1,5 @@
 import { SET_BOOKSHELF_DATA } from "../actions/types";
 
-const isEmpty = require("is-empty");
-
 const initialState = {
   bookshelves: {},
 };
@@ -12,7 +10,7 @@ export default function(state = initialState, action) {
     case SET_BOOKSHELF_DATA:
       return {
         ...state,
-        bookshelves: action.payload
+        bookshelves: action.payload.data
       };
     default:
       return state;

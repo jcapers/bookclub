@@ -1,6 +1,6 @@
 import React from "react";
 import { Component } from "react";
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 // REDUX
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -68,8 +68,6 @@ class Register extends Component {
       password: this.state.password,
       password2: this.state.password2
     };
-
-    console.log(newUser);
 
     this.props.registerUser(newUser, this.props.history); 
   };

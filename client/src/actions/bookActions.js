@@ -35,3 +35,76 @@ export const getBookshelves = data => dispatch => {
       })
     );
 };
+
+/*
+* Action: Create a book shelf.
+*/
+export const createBookshelf = data => dispatch => {
+  axios
+    .post("/books/shelf/create", data)
+    .then(res => {
+      const userData = { userID: data.userID }
+      dispatch(getBookshelves(userData))
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+/*
+* Action: Create a book shelf.
+*/
+export const deleteBookshelf = data => dispatch => {
+  axios
+    .delete(`/books/shelf/delete/${data.shelfID}`)
+    .then(res => {
+      const userData = { userID: data.userID }
+      dispatch(getBookshelves(userData))
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+/*
+* Action: Delete books.
+*/
+export const deleteBook = data => dispatch => {
+  console.log(data);
+  axios
+    .delete(`/books/shelf/deleteBook/${data.shelfID}/${data.bookID}`)
+    .then(res => {
+      const userData = { userID: data.userID }
+      dispatch(getBookshelves(userData))
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+/*
+* Action: Add a book to the bookshelf
+*/
+export const addBook = data => dispatch => {
+  axios
+    .put(`/books/shelf/addBook/${data.shelfID}`, data)
+    .then(res => {
+      const userData = { userID: data.userID }
+      dispatch(getBookshelves(userData))
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};

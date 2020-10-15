@@ -1,6 +1,6 @@
 import React from "react";
 import { Component } from "react";
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 // REDUX
 import PropTypes from "prop-types";
 import { connect } from "react-redux";

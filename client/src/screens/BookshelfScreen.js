@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 // Components
 import Bookshelf from '../components/books/Bookshelf';
+import BookshelfForm from '../components/books/BookshelfForm';
 
 
 export default function BookshelfScreen() {
@@ -20,6 +21,10 @@ export default function BookshelfScreen() {
         <Typography variant="h5" className={classes.section}>
           Welcome back {userDetails.displayName}!
         </Typography>
+        <Typography variant="h5" className={classes.section}>
+          Bookshelves
+        </Typography>
+        <BookshelfForm />
       </Box>
       <Bookshelf />
     </Container>
@@ -32,20 +37,5 @@ const useStyles = makeStyles((theme) => ({
   },
   section: {
     marginBottom: theme.spacing(1)
-  },
-  shelf: {
-
-  },
-  lists: {
-
-  },
-  media: {
-    maxHeight: 256,
-    maxWidth: 256,
-    minHeight: 64,
-    minWidth: 64,
-    height: "56.25%",
-    objectFit: "contain"
-    
   }
 }));

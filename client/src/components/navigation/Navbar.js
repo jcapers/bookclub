@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from "react-router";
 // REDUX
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +20,6 @@ import MenuBookIcon from '@material-ui/icons/MenuBook';
 
 export default function Navbar() {
   const classes = useStyles();
-  const preventDefault = (event) => event.preventDefault();
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   // History hook
   const history = useHistory();

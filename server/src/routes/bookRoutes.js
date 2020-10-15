@@ -99,14 +99,14 @@ router.put("/shelf/addBook/:shelfID", (req, res) => {
 * Deletes books from bookshelf in :shelfID
 * DELETE /books/shelf/deleteBook/:shelfID
 */
-router.delete("/shelf/deleteBook/:shelfID", async (req, res) => {
-  await Bookshelf.findByIdAndUpdate(req.params.shelfID, { 
+router.delete("/shelf/deleteBook/:shelfID/:bookID", (req, res) => {
+  Bookshelf.findByIdAndUpdate(req.params.shelfID, { 
     $pull: {
-      "books": { "bookTitle": req.body.bookTitle }
+      "books": { "_id": req.params.bookID }
     },
     updateDate: Date.now()
-  }, { safe: true }).then(update => {
-    return res.json({success: true, message: `Book ${req.body.bookTitle} removed from bookshelf.`, data: update})
+  }, { safe: true, useFindAndModify: false }).then(update => {
+    return res.json({success: true, message: `Book ${req.params.bookID} removed from bookshelf ${req.params.shelfID}.`, data: update})
   });
 });
 

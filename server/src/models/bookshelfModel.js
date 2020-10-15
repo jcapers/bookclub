@@ -38,9 +38,13 @@ const bookshelfSchema = new Schema({
     {
       bookTitle: {
         type: String,
-        required: true,
+        default: "",
       },
       imageURI: {
+        type: String,
+        default: ""
+      },
+      author: {
         type: String,
         default: ""
       },
