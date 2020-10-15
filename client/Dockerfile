@@ -1,5 +1,5 @@
 # Build app
-FROM node:lts as build
+FROM node:lts-alpine as build
 
 RUN mkdir -p /app/client
 WORKDIR /app/client

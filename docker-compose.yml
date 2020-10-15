@@ -2,7 +2,7 @@ version: "3"
 
 services:
     # Main Server
-    api.bookclub:
+    api-bookclub:
         build: ./server
         environment:
             - MONGO_URI=${MONGO_URI}
@@ -17,12 +17,12 @@ services:
             - ./server/src:/app/server/src
         command: nodemon -L src/server.js
         depends_on:
-            - db.bookclub
+            - db-bookclub
         networks:
             - 'app-network'
         restart: always
     # Frontend Client
-    client.bookclub:
+    client-bookclub:
         build: ./client
         environment:
           - REACT_APP_PORT=${REACT_APP_PORT}
@@ -35,14 +35,14 @@ services:
           - ./client/src:/app/client/src
           - ./client/public:/app/client/public
         depends_on: 
-          - api.bookclub
+          - api-bookclub
         networks:
           - 'app-network'
         command: npm run start
         restart: always
         stdin_open: true
     # MongoDB
-    db.bookclub:
+    db-bookclub:
         image: mongo
         ports:
             - ${MONGO_PORT}:${MONGO_PORT}

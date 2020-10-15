@@ -1,0 +1,29 @@
+# db-controller.yml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: db-bookclub
+  name: db-bookclub-controller
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: db-bookclub
+    spec:
+      containers:
+      - image: mongo
+        name: db-bookclub
+        ports:
+        - name: db-bookclub
+          containerPort: 27017
+          hostPort: 27017
+        volumeMounts:
+            - name: db-bookclub-volume
+              mountPath: /data/db
+      volumes:
+        - name: db-bookclub-volume
+          gcePersistentDisk:
+            pdName: db-bookclub-volume
+            fsType: ext4
