@@ -8,6 +8,9 @@ Book Club App built using MERN Stack.
 
 Deployable with Docker on a cloud instance. Currently does not work with kubernetes - ongoing.
 
+## Deploy containers
+`docker-compose up --build -d`
+
 ## References
 Some aspects of this project was not possible without some tutorials.
 
