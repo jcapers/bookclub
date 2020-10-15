@@ -1,0 +1,15 @@
+# client-service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-bookclub
+  labels:
+    name: client-bookclub
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    name: client-bookclub

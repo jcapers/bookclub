@@ -1,0 +1,20 @@
+# api-controller.yml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: api-bookclub
+  name: api-bookclub-controller
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: api-bookclub
+    spec:
+      containers:
+      - image: gcr.io/algebraic-notch-248323/bookclub_api
+        name: api-bookclub
+        ports:
+        - containerPort: 4000
+          name: api-bookclub

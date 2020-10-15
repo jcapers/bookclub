@@ -1,4 +1,18 @@
 # Book Club Social App
-Book Club Social App built with MERN stack.
+Book Club App built using MERN Stack.
 
-Deployable with Docker. Potentially Docker Swarm or Google Kubernetes.
+## Current Features
+- User Registration, login, auth with jwtokens, passwords hashed
+- Bookshelves create, delete
+- Add/delete books from shelves
+
+Deployable with Docker on a cloud instance. Currently does not work with kubernetes - ongoing.
+
+## References
+Some aspects of this project was not possible without some tutorials.
+
+**Containerising a MERN app with docker-compose**
+
+[1] J. Cuneo, MERN + Docker Starter, Github, Aug 21, 2018. [Online]. Available: https://github.com/joshdcuneo/mern-docker-starter
+
+[2] R. Prasad, Build a Login/Auth App with the MERN Stack, Bits and Pieces, Nov 22, 2018. [Online]. Available: https://blog.bitsrc.io/build-a-login-auth-app-with-mern-stack-part-1-c405048e3669

@@ -1,0 +1,13 @@
+#api-service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: api-bookclub
+  name: api-bookclub
+spec:
+  ports:
+    - port: 4000
+      targetPort: 4000
+  selector:
+    name: api-bookclub

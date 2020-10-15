@@ -1,0 +1,20 @@
+# client-controller.yml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: client-bookclub
+  name: client-bookclub-controller
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: client-bookclub
+    spec:
+      containers:
+      - image: gcr.io/algebraic-notch-248323/bookclub_client
+        name: client-bookclub
+        ports:
+        - containerPort: 3000
+          name: client-bookclub
