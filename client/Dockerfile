@@ -7,7 +7,7 @@ WORKDIR /app/client
 COPY package*.json /app/client/
 
 # Install dependencies first
-RUN npm install && npm install react-scripts@3.0.0 -g
+RUN npm install && npm install react-scripts -g
 
 COPY . /app/client/
 
